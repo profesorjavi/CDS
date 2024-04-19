@@ -3,20 +3,20 @@
 ## Crea tu primer lanzador en tres pasos
 
 
-1. Necesitamos una **aplicación**. Por ejemplo, xeyes, `/usr/bin/xeyes``
-2. Necesitamos una **icono**. Selecionamos el icono . <img src="preferences-desktop-emoticons-icon.png" width="24px" heith="24px" //> [".png](preferences-desktop-emoticons-icon.png) y lo situamos en `/usr/share/icons``
+1. Necesitamos una **aplicación**. Por ejemplo, xeyes, `/usr/bin/xeyes`
+2. Necesitamos una **icono**. Selecionamos el icono . <img src="preferences-desktop-emoticons-icon.png" width="24px" heith="24px"/> [".png](preferences-desktop-emoticons-icon.png) y lo situamos en `/usr/share/icons`
 3. Creamos el **archivo .desktop** para el lanzador
 ```sh
 sudo vi /usr/share/applications/org.lasenia.xeyes.desktop
 ```
 
-
-    [Desktop Entry]
-    Type=Application
-    Name=xeyes
-    Exec=/usr/bin/xeyes
-    Icon=/usr/share/icons/preferences-desktop-emoticons-icon.png
-
+```
+[Desktop Entry]
+Type=Application
+Name=xeyes
+Exec=/usr/bin/xeyes
+Icon=/usr/share/icons/preferences-desktop-emoticons-icon.png
+```
 
 4. Comprobamos en el menu de aplicaciones que nos aparece
 
@@ -89,10 +89,10 @@ En freedesktop se puede encontrar toda la información. [https://specifications.
     Name[ca]=Idioma en castellano
     Name[ca@valencia]= valenciano
     Name[en_GB]=Idioma en ingles
-    Comment=Acceso a xeyes
-    Comment[ca]=Acceso a xeyes
-    Comment[ca@valencia]=Acces a xeyes
-    Comment[en_GB]=Access xeyes
+    Comment=Acceso a la app
+    Comment[ca]=Acceso a la app
+    Comment[ca@valencia]=Accés a la app
+    Comment[en_GB]=app access 
 
 # Ejecutar xdg-open (*por ampliar)
 

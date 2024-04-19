@@ -1,10 +1,10 @@
-# Lanzador de aplicaciones
+### Lanzador de aplicaciones
 
-## Crea tu primer lanzador en tres pasos
+#### Crea tu primer lanzador en tres pasos
 
 
 1. Necesitamos una **aplicación**. Por ejemplo, xeyes, `/usr/bin/xeyes`
-2. Necesitamos una **icono**. Selecionamos el icono . <img src="preferences-desktop-emoticons-icon.png" width="24px" heith="24px"/> [".png](preferences-desktop-emoticons-icon.png) y lo situamos en `/usr/share/icons`
+2. Necesitamos una **icono**. Selecionamos el icono . <img src="preferences-desktop-emoticons-icon.png" width="24px" heith="24px"/> [icono.png](preferences-desktop-emoticons-icon.png) y lo situamos en `/usr/share/icons`
 3. Creamos el **archivo .desktop** para el lanzador
 ```sh
 sudo vi /usr/share/applications/org.lasenia.xeyes.desktop
@@ -18,7 +18,7 @@ Exec=/usr/bin/xeyes
 Icon=/usr/share/icons/preferences-desktop-emoticons-icon.png
 ```
 
-4. Comprobamos en el menu de aplicaciones que nos aparece
+##### Comprobamos en el menu de aplicaciones que nos aparece
 
 ![Menú de las aplicaiones](menu_apps.png)
 
@@ -27,17 +27,17 @@ Icon=/usr/share/icons/preferences-desktop-emoticons-icon.png
 
 ---
 
-## Qué son
+#### Qué son
 
 Tanto el entorno de escritorio KDE como el GNOME han adoptado un formato similar para los archivos de configuración que describen cómo se iniciará un programa en particular, cómo aparece en los menús, etc.
 En freedesktop se puede encontrar toda la información. [https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html)
 
-# Consideraciones sobre su nomenclatura
+#### Consideraciones sobre su nomenclatura
 
 * Los archivos de entrada del escritorio deben tener la extensión .desktop
 * Siguen el formato inverso a los servidores DNS. El nombre de dominio debe ir seguido del nombre de la aplicación. Por ejemplo, si el propietario de example.org escribe "Foo Viewer", puede elegir el nombre org.example.FooViewer, lo que dará como resultado un archivo llamado org.example.FooViewer.desktop.
 
-# Dónde se guardan los lanzadores
+#### Dónde se guardan los lanzadores
 
 * Para aplicaciones compartidas con todos los usuarios
 
@@ -57,7 +57,7 @@ En freedesktop se puede encontrar toda la información. [https://specifications.
 /home/<user>/Escritorio
 ```
 
-# Formato mínimo
+#### Formato mínimo
     [Desktop Entry]
     Type=Application
     Name=nombre
@@ -65,7 +65,7 @@ En freedesktop se puede encontrar toda la información. [https://specifications.
 * **Type** define 3 tipos de entradas de escritorio: Application, Link y Directory
 * **Name** define el nombre de la aplicación
 
-# Formato básico
+#### Formato básico
 
     [Desktop Entry]
     Type=Application
@@ -79,7 +79,7 @@ En freedesktop se puede encontrar toda la información. [https://specifications.
   Dependiendo si la aplicación es para usuario local o para todos podemos guardar el icono en `/usr/share/icons` o en `~/.icons`.
 * **Exec** .Programa para ejecutar. Es necesario para que aparezca en el listado grafico de aplicaciones, en el menú. Si el programa requiere archivos/url adjuntos podemo utilizar parametros. [información detallada](https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s07.html)
 
-# Formato medio
+#### Formato medio
 
     [Desktop Entry]
     Type=Application
@@ -94,7 +94,7 @@ En freedesktop se puede encontrar toda la información. [https://specifications.
     Comment[ca@valencia]=Accés a la app
     Comment[en_GB]=app access 
 
-# Ejecutar xdg-open (*por ampliar)
+#### Ejecutar xdg-open (*por ampliar)
 
 xdg-open abre un archivo o URL en la aplicación preferida del usuario. Si se proporciona una URL, la URL se abrirá en el navegador web preferido del usuario. Si se proporciona un archivo, éste se abrirá en la aplicación preferida para archivos de ese tipo. xdg-open admite URL de archivos, ftp, http y https.
 

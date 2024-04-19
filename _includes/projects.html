@@ -1,11 +1,4 @@
 {% assign sorted_repos = (site.github.public_repositories | sort: 'stargazers_count') | reverse  %}
-<div class="col s12 switch">
-  <label>
-    Show forked projects
-    <input class="fork-switch" type="checkbox"  onchange="toggleForked()">
-    <span class="lever"></span>
-  </label>
-</div>
 {% for repo in sorted_repos %}
 <div class="col s12 m6 l4" {% if repo.fork %}id="forked" hidden {% endif %}>
   <div class="card hoverable">

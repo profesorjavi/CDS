@@ -79,6 +79,18 @@ En freedesktop se puede encontrar toda la información. [https://specifications.
   Dependiendo si la aplicación es para usuario local o para todos podemos guardar el icono en `/usr/share/icons` o en `~/.icons`.
 * **Exec** .Programa para ejecutar. Es necesario para que aparezca en el listado grafico de aplicaciones, en el menú. Si el programa requiere archivos/url adjuntos podemo utilizar parametros. [información detallada](https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s07.html)
 
+Las aplicaciones ejecutables suelen almacenarse en los directorios existentes en el `PATH`. O bien, se añade al PATH la ruta donde se encuentran, de esta manera evitamos conocer la ruta en la cual se encuentan los ejecutables y los podemos ejecutar directamente desde cualquier localización  
+```sh  
+$ echo $PATH
+/home/<user>/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+```
+
+Si queremos saber donde se encuentra una determinada aplicación podemos utilizar which
+```sh
+$ which xeyes 
+/usr/bin/xeyes
+```
+
 #### Formato medio
 
     [Desktop Entry]

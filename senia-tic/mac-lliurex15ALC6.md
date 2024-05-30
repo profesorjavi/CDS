@@ -5,10 +5,11 @@
 |  3  |  AA:BB:CC:DD:EE:FF  |  pc        |  A01     |   
 |  4  |  77:88:99:AA:BB:CC  |  pc        |  A01     |
 |  5  |  10:20:30:40:50:60  |  Toshiba   |  C02     |
+| --------------------------------------------------|
 | S1  |  4c:52:62:ad:b9:1e  | Server     |  A04     |
 | S2  |  4c:52:62:ad:b9:1e  | Server     |  A04     |
 | S3  |  4c:52:62:ad:b9:1e  | Server     |  A04     |
 
 
 
-Uso: senia-ip-from [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR]
+Uso: senia-ip-from-mac [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR]

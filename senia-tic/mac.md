@@ -1,14 +1,10 @@
 | Id  |      Mac            | Equipo     |  Lugar   |
 |-----|---------------------|------------|----------|
-|  1  |  00:1A:2B:3C:4D:5E  |  dynaBook  |  C01     |
-|  2  |  11:22:33:44:55:66  |  dynaBook  |  C02     |
-|  3  |  AA:BB:CC:DD:EE:FF  |  pc        |  A01     |   
-|  4  |  77:88:99:AA:BB:CC  |  pc        |  A01     |
-|  5  |  10:20:30:40:50:60  |  Toshiba   |  C02     |
-| S1  |  4c:52:62:ad:b9:1e  | Server     |  A04     |
-| S2  |  4c:52:62:ad:b9:1e  | Server     |  A04     |
-| S3  |  4c:52:62:ad:b9:1e  | Server     |  A04     |
-
-
-
-Uso: senia-ip-from [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR]
+|  1  |  84:47:09:00:69:9b  |  dynaBook  |  C01     |
+|  2  |  84:47:09:00:68:d9  |  dynaBook  |  C02     |
+|  3  |  84:47:09:00:91:34  |  pc        |  A01     |   
+|  4  |  22:bc:ab:00:5c:78  |  pc        |  A01     |
+|  5  |  5c:85:7e:4e:f4:bb  |  Toshiba   |  C02     |
+| S1  |  4c:52:62:ad:b9:1e  |  Server    |  A04     |
+| S2  |  84:47:09:00:68:3a  |  Server    |  A04     |
+| S3  |  84:47:09:00:71:16  |  Server    |  A04     |

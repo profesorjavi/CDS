@@ -8,3 +8,6 @@
 | S1  |  4c:52:62:ad:b9:1e  |  Server    |  A04     |
 | S2  |  84:47:09:00:68:3a  |  Server    |  A04     |
 | S3  |  84:47:09:00:71:16  |  Server    |  A04     |
+| R1  |  44:ff:ba:0e:ea:bc  |  router    |  C01     |
+| C1  |  e8:a0:cd:6b:c9:cf  |  router    |  C01     |
+| C2  |  e8:a0:cd:6b:c9:xf  |  router    |  C01     |

@@ -6,7 +6,9 @@ ARCHIVO="https://raw.githubusercontent.com/profesorjavi/CDS/main/senia-tic/mac.m
 REPOS_MAC=""
 show_uso(){
     echo "---------------------------------------------------------------"
-    echo "- Uso: sudo $0 [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR] [-h (ayuda)] [opcional interface] [opcional url_macs]"
+    echo "- Uso: sudo $0 [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR]  [opcional interface] [opcional url_macs]"
+    echo " Mas info...   sudo $0 help"
+    echo
     echo "------------------------------------------------------------------------"
 }
 
@@ -18,6 +20,8 @@ show_ayuda(){
     echo "Nota: No tiene en cuenta el dispositivo gateway."
     echo
     echo "Opciones:"
+    echo "                Mostrar la ayuda:"
+    echo "                  sudo $0 help"
     echo "  -i ID         Filtra por ID especificado. Ejemplo S1:"
     echo "                  sudo $0 -i S1"
     echo "                  sudo $0 -i ALL #Muestra todos los ids"
@@ -32,8 +36,6 @@ show_ayuda(){
     echo "  ARCHIVO      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:"
     echo "                  sudo $0 -i S1 eth0"
 
-    echo "  -h HELP      Muestra la ayuda."
-    echo "                  sudo $0 -h HELP"
 
     echo
 
@@ -49,9 +51,21 @@ update_repos_mac (){
 }
 
 case $# in
+   0)
+        update_repos_mac
+        echo "$REPOS_MAC"
+        show_uso
+        exit 0 
+        ;;
     1)
-        if [ $1 == "help"]; then
+        if [ $1 == "help" ]; then
             show_ayuda
+        else 
+            show_uso
+        fi
+        ;;
+    2)
+        ;;
     3)
         if [[ $3 =~ ^https?:// ]]; then
             ARCHIVO="$3"
@@ -70,9 +84,8 @@ case $# in
         fi
         
         ;;
-    0)
-        update_repos_mac
-        echo "$REPOS_MAC"
+    5)
+        echo "ilegal número de arguemntos"
         show_uso
         exit 0 
         ;;
@@ -81,6 +94,8 @@ esac
 
 # MAIN *****
 get_ips_from_macs(){
+    i=0
+    j=0
     echo "Mi ip: $IP"
     echo "Mi gateway: $GATEWAY"
     echo -e "Analizando interfaz $INTERFAZ ...\n"
@@ -92,11 +107,14 @@ get_ips_from_macs(){
         if [ -n "$ip" ] && [ "$ip" != "$GATEWAY" ]; then
             echo -e "$ip\t" $(echo "$REPOS_MAC" | grep "$mac")
             ips+="$ip "
+            i=$((i + 1))
         else
             echo -e "Inalcanzable\t" $( echo "$REPOS_MAC" | grep "$mac" )
+            j=$((j + 1))
+
         fi       
     done
-    echo -e "\nIPs obtenidas (clusterssh):\n$ips\n"
+    echo -e "\nIPs obtenidas $i/$((i+j)) (clusterssh):\n$ips\n"
 }
 
 

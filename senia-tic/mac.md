@@ -11,3 +11,25 @@
 | R1  |  44:ff:ba:0e:ea:bc  |  router    |  C01     |
 | C1  |  e8:a0:cd:6b:c9:cf  |  router    |  C01     |
 | C2  |  e8:a0:cd:6b:c9:af  |  router    |  C01     |
+| inf3_pc1   | 88:ae:dd:59:dc:41   | pc     | INF3   |
+| inf3_pc2   | 88:ae:dd:59:e6:21   | pc     | INF3   |
+| inf3_pc3   | 88:ae:dd:59:e5:f0   | pc     | INF3   |
+| inf3_pc4   | 88:ae:dd:59:e0:6c   | pc     | INF3   |
+| inf3_pc5   | 88:ae:dd:59:df:f1   | pc     | INF3   |
+| inf3_pc6   | 88:ae:dd:59:e5:c0   | pc     | INF3   |
+| inf3_pc7   | 88:ae:dd:59:dc:5f   | pc     | INF3   |
+| inf3_pc8   | 88:ae:dd:59:e0:23   | pc     | INF3   |
+| inf3_pc9   | 88:ae:dd:59:df:2b   | pc     | INF3   |
+| inf3_pc10  | 88:ae:dd:59:e5:f5   | pc     | INF3   |
+| inf3_pc11  | 88:ae:dd:59:e5:c5   | pc     | INF3   |
+| inf3_pc12  | 88:ae:dd:59:e6:22   | pc     | INF3   |
+| inf3_pc13  | 88:ae:dd:59:df:ca   | pc     | INF3   |
+| inf3_pc14  | 88:ae:dd:59:df:f6   | pc     | INF3   |
+| inf3_pc15  | 88:ae:dd:59:dd:2f   | pc     | INF3   |
+| inf3_pc16  | 88:ae:dd:59:df:a8   | pc     | INF3   |
+| inf3_pc17  | 88:ae:dd:59:df:b2   | pc     | INF3   |
+| inf3_pc51  | b0:6e:bf:d2:92:22   | pc     | INF3   |
+| inf3_pc52  | b0:6e:bf:d2:90:cc   | pc     | INF3   |
+| inf3_pc56  | b0:6e:bf:d2:92:a2   | pc     | INF3   |
+| inf3_pc61  | b0:6e:bf:d2:91:16   | pc     | INF3   |
+| inf3_pcprofe| 88:ae:dd:59:e1:c2  | pc     | INF3   |

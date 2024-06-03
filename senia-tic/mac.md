@@ -33,3 +33,26 @@
 | inf3_pc56  | b0:6e:bf:d2:92:a2   | pc     | INF3   |
 | inf3_pc61  | b0:6e:bf:d2:91:16   | pc     | INF3   |
 | inf3_pcprofe| 88:ae:dd:59:e1:c2  | pc     | INF3   |
+| Id         |      Mac            | Equipo |  Lugar |
+|------------|---------------------|--------|--------|
+| inf4_pc1   | 9c:7b:ef:ab:f8:83   | pc     | INF4   |
+| inf4_pc2   | 50:65:f3:24:7e:02   | pc     | INF4   |
+| inf4_pc3   | 50:65:f3:2b:91:30   | pc     | INF4   |
+| inf4_pc4   | 50:65:f3:27:a7:80   | pc     | INF4   |
+| inf4_pc5   | 50:65:f3:2b:94:df   | pc     | INF4   |
+| inf4_pc6   | 50:65:f3:25:2b:ea   | pc     | INF4   |
+| inf4_pc7   | 50:65:f3:26:b6:75   | pc     | INF4   |
+| inf4_pc8   | 50:65:f3:2b:92:68   | pc     | INF4   |
+| inf4_pc9   | 50:65:f3:1f:76:9c   | pc     | INF4   |
+| inf4_pc10  | 50:65:f3:2d:80:9a   | pc     | INF4   |
+| inf4_pc11  | 50:65:f3:27:a7:79   | pc     | INF4   |
+| inf4_pc12  | 50:65:f3:27:aa:65   | pc     | INF4   |
+| inf4_pc13  | 50:65:f3:27:a7:77   | pc     | INF4   |
+| inf4_pc14  | 50:65:f3:24:7e:08   | pc     | INF4   |
+| inf4_pc15  | 50:65:f3:27:a7:97   | pc     | INF4   |
+| inf4_pc16  | 50:65:f3:2b:4e:34   | pc     | INF4   |
+| inf4_pc17  | 50:65:f3:27:a7:82   | pc     | INF4   |
+| inf4_pc18  | 50:65:f3:2d:80:c0   | pc     | INF4   |
+| inf4_pc19  | 50:65:f3:2d:80:b3   | pc     | INF4   |
+| inf4_pc20  | 50:65:f3:2a:16:a5   | pc     | INF4   |
+| inf4_pc21  | 50:65:f3:26:b8:6e   | pc     | INF4   |

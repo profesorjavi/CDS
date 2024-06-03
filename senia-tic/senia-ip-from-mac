@@ -84,7 +84,7 @@ case $# in
         fi
         
         ;;
-    5)
+    *)
         echo "ilegal número de arguemntos"
         show_uso
         exit 0 
@@ -101,7 +101,7 @@ get_ips_from_macs(){
     echo -e "Analizando interfaz $INTERFAZ ...\n"
     echo -e "|      IP \t | Id  |      Mac        | Equipo     |  Lugar   |"
     for mac in $1; do
-        local ip=$(arp-scan --interface=$INTERFAZ --localnet --retry=5 --ignoredups --destaddr=$mac | tail -n +3 | head -n -2 | awk '{print $1}')
+        local ip=$(arp-scan --interface=$INTERFAZ --localnet --retry=5 --ignoredups --destaddr=$mac | grep "$mac" | tail -n +3 | head -n -2 | awk '{print $1}')
         #echo "sudo arp-scan --interface=$INTERFAZ --localnet --retry=5 --ignoredups --destaddr=$mac | tail -n +3 | head -n -2 | awk '{print \$1}'"
         #En casa me mostraba el gateway en algunos dispositivos
         if [ -n "$ip" ] && [ "$ip" != "$GATEWAY" ]; then

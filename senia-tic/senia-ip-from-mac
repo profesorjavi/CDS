@@ -1,0 +1,158 @@
+#!/bin/bash
+IP=$(ip route get 1 | awk '{print $7}')
+INTERFAZ=$(ip route get 1 | awk '{print $5}')
+GATEWAY=$(ip route get 1 | awk '{print $3}')
+ARCHIVO="https://raw.githubusercontent.com/profesorjavi/CDS/main/senia-tic/mac.md"
+REPOS_MAC=""
+show_uso(){
+    echo "---------------------------------------------------------------"
+    echo "- Uso: sudo $0 [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR] [-h (ayuda)] [opcional interface] [opcional url_macs]"
+    echo "------------------------------------------------------------------------"
+}
+
+show_ayuda(){
+    show_uso
+    echo "-----------------------------------------------------------------"
+    echo "Este script obtiene la dirección IP a partir de los filtros que se indiquen."
+    echo "Repositorio de MACs en: $ARCHIVO"
+    echo "Nota: No tiene en cuenta el dispositivo gateway."
+    echo
+    echo "Opciones:"
+    echo "  -i ID         Filtra por ID especificado. Ejemplo S1:"
+    echo "                  sudo $0 -i S1"
+    echo "                  sudo $0 -i ALL #Muestra todos los ids"
+    echo "  -m MAC        Filtra por dirección MAC especificada. Ejemplo:"
+    echo "                  sudo $0 -m 00:1A:2B:3C:4D:5E"
+    echo "  -e EQUIPO     Filtra por nombre de equipo especificado. Ejemplo para dynaBook:"
+    echo "                  sudo $0 -e dynaBook"
+    echo "  -l LUGAR      Filtra por lugar especificado. Ejemplopara A01"
+    echo "                  sudo $0 -l A01"
+    echo "  INTERFAZ      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:"
+    echo "                  sudo $0 -i S1 eth0"
+    echo "  ARCHIVO      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:"
+    echo "                  sudo $0 -i S1 eth0"
+
+    echo "  -h HELP      Muestra la ayuda."
+    echo "                  sudo $0 -h HELP"
+
+    echo
+
+}
+
+update_repos_mac (){
+        REPOS_MAC=$(curl -s "$ARCHIVO")
+        estado_repos_mac=$(echo "$REPOS_MAC" | grep -i "MAC")
+        if [ -z "$estado_repos_mac" ]; then
+            echo "No se puede acceder al repositorio de macs $ARCHIVO .Terminando ejecución."
+            exit 1
+        fi
+}
+
+case $# in
+    1)
+        if [ $1 == "help"]; then
+            show_ayuda
+    3)
+        if [[ $3 =~ ^https?:// ]]; then
+            ARCHIVO="$3"
+        else
+            INTERFAZ="$3" 
+        fi
+        ;;
+        
+    4)
+        if [[ $3 =~ ^https?:// ]]; then
+            ARCHIVO="$3"
+            INTERFAZ="$4" 
+        else
+            INTERFAZ="$3" 
+            ARCHIVO="$4"
+        fi
+        
+        ;;
+    0)
+        update_repos_mac
+        echo "$REPOS_MAC"
+        show_uso
+        exit 0 
+        ;;
+esac
+
+
+# MAIN *****
+get_ips_from_macs(){
+    echo "Mi ip: $IP"
+    echo "Mi gateway: $GATEWAY"
+    echo -e "Analizando interfaz $INTERFAZ ...\n"
+    echo -e "|      IP \t | Id  |      Mac        | Equipo     |  Lugar   |"
+    for mac in $1; do
+        local ip=$(arp-scan --interface=$INTERFAZ --localnet --retry=5 --ignoredups --destaddr=$mac | tail -n +3 | head -n -2 | awk '{print $1}')
+        #echo "sudo arp-scan --interface=$INTERFAZ --localnet --retry=5 --ignoredups --destaddr=$mac | tail -n +3 | head -n -2 | awk '{print \$1}'"
+        #En casa me mostraba el gateway en algunos dispositivos
+        if [ -n "$ip" ] && [ "$ip" != "$GATEWAY" ]; then
+            echo -e "$ip\t" $(echo "$REPOS_MAC" | grep "$mac")
+            ips+="$ip "
+        else
+            echo -e "Inalcanzable\t" $( echo "$REPOS_MAC" | grep "$mac" )
+        fi       
+    done
+    echo -e "\nIPs obtenidas (clusterssh):\n$ips\n"
+}
+
+
+while getopts ":i:m:e:l:h:" opt; do
+    update_repos_mac
+    case ${opt} in
+        i)
+            if [ "$OPTARG" == "ALL" ]; then
+                macs=$(awk '{print $4}' <(echo "$REPOS_MAC" | tail -n +2))
+            else
+                macs=$(awk -v id="$OPTARG" '$2 == id {print $4}' <(echo "$REPOS_MAC") )
+            fi
+            get_ips_from_macs "$macs"
+            ;;
+        m)
+            get_ips_from_macs "$OPTARG"
+            ;;
+        e)
+            macs=$(awk -v equipo="$OPTARG" '$6 == equipo {print $4}' <(echo "$REPOS_MAC"))
+            get_ips_from_macs "$macs"
+            ;;
+        l)
+            macs=$(awk -v lugar="$OPTARG" '$8 == lugar {print $4}' <(echo "$REPOS_MAC" ))
+            get_ips_from_macs "$macs"
+            ;;
+        h)
+            echo "Uso: sudo $0 [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR] [INTERFAZ]"
+            echo "-----------------------------------------------------------------"
+            echo "Este script obtiene la dirección IP a partir de los filtros que se indiquen."
+            echo "Repositorio de MACs en: $ARCHIVO"
+            echo "Nota: No tiene en cuenta el dispositivo gateway."
+            echo
+            echo "Opciones:"
+            echo "  -i ID         Filtra por ID especificado. Ejemplo S1:"
+            echo "                  sudo $0 -i S1"
+            echo "                  sudo $0 -i ALL #Muestra todos los ids"
+            echo "  -m MAC        Filtra por dirección MAC especificada. Ejemplo:"
+            echo "                  sudo $0 -m 00:1A:2B:3C:4D:5E"
+            echo "  -e EQUIPO     Filtra por nombre de equipo especificado. Ejemplo para dynaBook:"
+            echo "                  sudo $0 -e dynaBook"
+            echo "  -l LUGAR      Filtra por lugar especificado. Ejemplopara A01"
+            echo "                  sudo $0 -l A01"
+            echo "  INTERFAZ      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:"
+            echo "                  sudo $0 -i S1 eth0"
+            echo "  ARCHIVO      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:"
+            echo "                  sudo $0 -i S1 eth0"
+
+            echo "  -h HELP      Muestra la ayuda."
+            echo "                  sudo $0 -h HELP"
+
+            echo
+            ;;
+        *)
+            echo "-----------------------------------------------------------------------------------"
+            echo "- Uso: $0 [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR] [-h HELP] [opcional interface] [opcional url_macs]"
+            echo "----------------------------------------------------------------------------------"
+            ;;
+    esac
+done

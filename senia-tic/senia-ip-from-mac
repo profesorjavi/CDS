@@ -39,15 +39,17 @@ show_ayuda(){
     echo "                  sudo $0 -m 00:1A:2B:3C:4D:5E"
     echo "  -e EQUIPO     Filtra por nombre de equipo especificado. Ejemplo para dynaBook:"
     echo "                  sudo $0 -e dynaBook"
-    echo "  -l LUGAR      Filtra por lugar especificado. Ejemplopara A01"
-    echo "                  sudo $0 -l A01"
+    echo "  -l LUGAR      Filtra por lugar especificado. Ejemplo para INF4"
+    echo "                  sudo $0 -l INF4"
     echo "  INTERFAZ      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:"
     echo "                  sudo $0 -i S1 eth0"
-    echo "  ARCHIVO      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:"
-    echo "                  sudo $0 -i S1 eth0"
+    echo "  ARCHIVO      Especifica un archivo con un repositorio de macs. Ejemplo"
+    echo "                  sudo $0 -i S1 https://tic.ieslasenia.org/macs/mac.md"
 
-
-    echo
+    echo "  EJEMPLOS:"
+    echo "           "
+    echo "           "
+    echo "           "
 
 }
 
@@ -83,9 +85,7 @@ case $# in
             INTERFAZ="$3"
             test_interfaz $INTERFAZ 
         fi
-
-        ;;
-        
+        ;;   
     4)
         if [[ $3 =~ ^https?:// ]]; then
             ARCHIVO="$3"
@@ -116,9 +116,7 @@ get_ips_from_macs(){
     for mac in $1; do
         local ip=$(arp-scan --interface=$INTERFAZ --localnet --retry=5 --ignoredups --destaddr=$mac | grep "$mac" | awk '{print $1}')
 
-        #echo "sudo arp-scan --interface=$INTERFAZ --localnet --retry=5 --ignoredups --destaddr=$mac | grep "$mac" | awk '{print \$1}'"
-        #En casa me mostraba el gateway en algunos dispositivos
-        if [ -n "$ip" ] && [ "$ip" != "$GATEWAY" ]; then
+        if [ -n "$ip" ] && [ "$ip" != "$GATEWAY" ]; then #En pruebas mostraba el gateway asociado a algunos dispositivos
             echo -e "$ip\t" $(echo "$REPOS_MAC" | grep "$mac")
             ips+="$ip "
             i=$((i + 1))
@@ -129,7 +127,8 @@ get_ips_from_macs(){
         fi       
     done
     echo -e "\nIPs obtenidas $i/$((i+j)) (clusterssh):\n$ips\n"
-}
+    echo "$ips" | xclip
+   }
 
 
 while getopts ":i:m:e:l:h:" opt; do
@@ -157,6 +156,6 @@ while getopts ":i:m:e:l:h:" opt; do
             ;;
         *)
             show_uso
-             ;;
+            ;;
     esac
 done

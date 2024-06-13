@@ -1,0 +1,11 @@
+git  checkout develop
+# vincular las ramas
+git branch --set-upstream-to=origin/develop develop
+git pull
+git  checkout main
+# vincular las ramas
+git branch --set-upstream-to=origin/main main
+git pull
+git  checkout develop
+
+

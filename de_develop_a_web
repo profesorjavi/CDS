@@ -1,3 +1,4 @@
+echo "....Te situas en develop"
 git checkout develop
 git add . 
 git commit -m "$1" 
@@ -6,4 +7,4 @@ git checkout main
 git merge develop
 git push origin main
 git checkout develop
-echo "Te quedas en develop"
+echo "....Te quedas en develop"

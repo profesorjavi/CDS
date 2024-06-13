@@ -1,0 +1,144 @@
+#!/bin/bash
+
+IP=$(ip route get 1 | awk '{print $7}')
+INTERFAZ=$(ip route get 1 | awk '{print $5}')
+GATEWAY=$(ip route get 1 | awk '{print $3}')
+ARCHIVO="https://raw.githubusercontent.com/profesorjavi/CDS/main/senia-tic/mac.md"
+REPOS_MAC=""
+
+test_interfaz() {
+    if ! ip a show "$1" &> /dev/null; then
+        echo "Interfaz $1 no es válida. Terminando ejecución"
+        exit 1
+    fi
+}
+
+show_uso() {
+    cat << EOF
+---------------------------------------------------------------
+- Uso: sudo $0 [-i ID] [-m MAC] [-e EQUIPO] [-l LUGAR] [opcional interface] [opcional url_macs]
+  Mas info...   sudo $0 help
+------------------------------------------------------------------------
+EOF
+}
+
+show_ayuda() {
+    show_uso
+    cat << EOF
+-----------------------------------------------------------------
+Este script obtiene la dirección IP a partir de los filtros que se indiquen.
+Repositorio de MACs en: $ARCHIVO
+Nota: No tiene en cuenta el dispositivo gateway.
+
+Opciones:
+  Mostrar la ayuda:
+    sudo $0 help
+  -i ID         Filtra por ID especificado. Ejemplo S1:
+    sudo $0 -i S1
+    sudo $0 -i ALL # Muestra todos los ids
+  -m MAC        Filtra por dirección MAC especificada. Ejemplo:
+    sudo $0 -m 00:1A:2B:3C:4D:5E
+  -e EQUIPO     Filtra por nombre de equipo especificado. Ejemplo para dynaBook:
+    sudo $0 -e dynaBook
+  -l LUGAR      Filtra por lugar especificado. Ejemplo para INF4
+    sudo $0 -l INF4
+  INTERFAZ      Especifica una interfaz de red diferente a la utilizada. Ejemplo para eth0:
+    sudo $0 -i S1 eth0
+  ARCHIVO       Especifica un archivo con un repositorio de macs. Ejemplo:
+    sudo $0 -i S1 https://tic.ieslasenia.org/macs/mac.md
+
+EJEMPLOS:
+
+EOF
+}
+
+update_repos_mac() {
+    REPOS_MAC=$(curl -s "$ARCHIVO")
+    if ! echo "$REPOS_MAC" | grep -iq "MAC"; then
+        echo "No se puede acceder al repositorio de macs $ARCHIVO. Terminando ejecución."
+        exit 1
+    fi
+}
+
+get_ips_from_macs() {
+    local i=0 j=0
+    echo "Mi ip: $IP"
+    echo "Mi gateway: $GATEWAY"
+    echo -e "Analizando interfaz $INTERFAZ ...\n"
+    echo -e "|      IP \t | Id  |      Mac        | Equipo     |  Lugar   |"
+    for mac in $1; do
+        local ip=$(arp-scan --interface="$INTERFAZ" --localnet --retry=5 --ignoredups --destaddr="$mac" | awk '/'"$mac"'/ {print $1}')
+        if [ -n "$ip" ] && [ "$ip" != "$GATEWAY" ]; then
+            echo -e "$ip\t" $(echo "$REPOS_MAC" | grep "$mac")
+            ips+="$ip "
+            i=$((i + 1))
+        else
+            echo -e "Inalcanzable\t" $(echo "$REPOS_MAC" | grep "$mac")
+            j=$((j + 1))
+        fi       
+    done
+    echo -e "\nIPs obtenidas $i/$((i+j)) (clusterssh):\n$ips\n"
+    echo "$ips" | xclip
+}
+
+if [[ $# -eq 0 ]]; then
+    update_repos_mac
+    echo "$REPOS_MAC"
+    show_uso
+    exit 0
+fi
+
+# Verificar si el primer argumento es una opción válida o "help"
+case $1 in
+    help)
+        show_ayuda
+        exit 1
+        ;;
+    -i|-m|-e|-l)
+        PRIMARY_OPT=$1
+        PRIMARY_ARG=$2
+        shift 2
+        ;;
+    *)
+        show_uso
+        exit 1
+        ;;
+esac
+
+# Procesar argumentos adicionales opcionales (interfaz y archivo)
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        http*|https*)
+            ARCHIVO=$1
+            ;;
+        *)
+            INTERFAZ=$1
+            test_interfaz "$INTERFAZ"
+            ;;
+    esac
+    shift
+done
+
+update_repos_mac
+
+# Ejecutar la opción primaria
+case $PRIMARY_OPT in
+    -i)
+        [[ "$PRIMARY_ARG" == "ALL" ]] && macs=$(awk '{print $4}' <<< "$REPOS_MAC") || macs=$(awk -v id="$PRIMARY_ARG" '$2 == id {print $4}' <<< "$REPOS_MAC")
+        get_ips_from_macs "$macs"
+        ;;
+    -m)
+        get_ips_from_macs "$PRIMARY_ARG"
+        ;;
+    -e)
+        macs=$(awk -v equipo="$PRIMARY_ARG" '$6 == equipo {print $4}' <<< "$REPOS_MAC")
+        get_ips_from_macs "$macs"
+        ;;
+    -l)
+        macs=$(awk -v lugar="$PRIMARY_ARG" '$8 == lugar {print $4}' <<< "$REPOS_MAC")
+        get_ips_from_macs "$macs"
+        ;;
+    *)
+        show_uso
+        ;;
+esac

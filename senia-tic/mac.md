@@ -33,8 +33,6 @@
 | inf3_pc56  | b0:6e:bf:d2:92:a2   | pc     | INF3   |
 | inf3_pc61  | b0:6e:bf:d2:91:16   | pc     | INF3   |
 | inf3_pcprofe| 88:ae:dd:59:e1:c2  | pc     | INF3   |
-| Id         |      Mac            | Equipo |  Lugar |
-|------------|---------------------|--------|--------|
 | inf4_pc1   | 9c:7b:ef:ab:f8:83   | pc     | INF4   |
 | inf4_pc2   | 50:65:f3:24:7e:02   | pc     | INF4   |
 | inf4_pc3   | 50:65:f3:2b:91:30   | pc     | INF4   |

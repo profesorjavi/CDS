@@ -1,3 +1,4 @@
+clear
 echo "....Te situas en develop"
 git checkout develop
 git add . 
